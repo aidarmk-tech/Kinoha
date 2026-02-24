@@ -82,8 +82,9 @@ module.exports = async (req, res) => {
       proxyReq.end();
     });
 
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.status(200).send(data);
+    var ct = proxyRes.headers['content-type'] || 'text/html';
+res.setHeader('Content-Type', ct);
+res.status(200).send(data);
   } catch (e) {
     console.error('Proxy error:', e.message);
     res.status(500).json({ error: e.message });
